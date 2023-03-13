@@ -5,7 +5,7 @@ import lombok.Data;
 /**
  * Created by jt on 9/24/17.
  */
-@Data
+@Data // get set e costruttore (pojo)
 public class CategoryDTO {
     private Long id;
     private String name;
