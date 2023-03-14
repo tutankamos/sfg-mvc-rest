@@ -13,7 +13,8 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface CustomerMapper {
 
-    CustomerMapper INSTANCE = Mappers.getMapper(CustomerMapper.class);
+    CustomerMapper INSTANCE = Mappers.getMapper(CustomerMapper.class); // serve per i test
 
+    // dichiaro un metodo che verra' implementato da mapstruct e che serve per convertire un oggetto in un DTO (e quindi i dati in json)
     CustomerDTO customerToCustomerDTO(Customer customer);
 }

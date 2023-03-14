@@ -25,6 +25,9 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.findAll()
                 .stream()
                 .map(categoryMapper::categoryToCategoryDTO)
+//                .map(category -> { // forma lunga
+//                    return categoryMapper.categoryToCategoryDTO(category);
+//                })
                 .collect(Collectors.toList());
     }
 
