@@ -5,6 +5,7 @@ import guru.springfamework.api.v1.model.CustomerDTO;
 import guru.springfamework.controllers.v1.CustomerController;
 import guru.springfamework.domain.Customer;
 import guru.springfamework.repositories.CustomerRepository;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -59,6 +60,35 @@ public class CustomerServiceImpl implements CustomerService {
 
         return saveAndReturnDTO(customer);
     }
+
+    @Override
+    public CustomerDTO patchCustomer(Long id, CustomerDTO customerDTO) {
+        return customerRepository.findById(id).map(customer -> { // ha poco senso scrivere qui un map penso
+            if(customerDTO.getFirstname() != null){
+                customer.setFirstname(customerDTO.getFirstname());
+            }
+            if(customerDTO.getLastname() != null){
+                customer.setLastname(customerDTO.getLastname());
+            }
+            return saveAndReturnDTO(customer);
+        }).orElseThrow(RuntimeException::new); // todo implement better exception handling
+    }
+
+//    // provo a non usare .map
+//    @Override // vado in casino se tolgo il map perche' non so gestire bene l'opitonal
+//    public CustomerDTO patchCustomer(Long id, CustomerDTO customerDTO) {
+//
+//        Optional<Customer> customer = customerRepository.findById(id);
+//        if (customer != null){
+//            if(customerDTO.getFirstname() != null){
+//                customer.setFirstname(customerDTO.getFirstname());
+//            }
+//            if(customerDTO.getLastname() != null){
+//                customer.setLastname(customerDTO.getLastname());
+//            }
+//            return saveAndReturnDTO(customer);
+//        }.orElseThrow(RuntimeException::new); // todo implement better exception handling
+//    }
 
     private String getCustomerUrl(Long id) {
         return CustomerController.BASE_URL + "/" + id;
