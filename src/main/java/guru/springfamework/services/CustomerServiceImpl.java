@@ -22,15 +22,11 @@ public class CustomerServiceImpl implements CustomerService {
         this.customerRepository = customerRepository;
     }
 
-    private String getCustomerUrl (Long id) {
-        return CustomerController.BASE_URL + "/" + id;
-    }
-
     @Override // per questo metodo mi manca tutta la parte della generazione dell'url che lui ha fatto
     public List<CustomerDTO> getAllCustomers() {
         return customerRepository.findAll()
                 .stream()// apro lo stream e faccio cose
-                .map( customer -> {
+                .map(customer -> {
                     CustomerDTO cDTO = customerMapper.customerToCustomerDTO(customer);
                     cDTO.setUrl(getCustomerUrl(customer.getId()));
                     return cDTO;
@@ -52,6 +48,23 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomerDTO createNewCustomer(CustomerDTO customerDTO) {
         Customer customer = customerMapper.customerDTOToCustomer(customerDTO);
+
+        return saveAndReturnDTO(customer);
+    }
+
+    @Override
+    public CustomerDTO saveCustomerByDTO(Long id, CustomerDTO customerDTO) {
+        Customer customer = customerMapper.customerDTOToCustomer(customerDTO);
+        customer.setId(id);
+
+        return saveAndReturnDTO(customer);
+    }
+
+    private String getCustomerUrl(Long id) {
+        return CustomerController.BASE_URL + "/" + id;
+    }
+
+    private CustomerDTO saveAndReturnDTO(Customer customer) {
         Customer savedCustomer = customerRepository.save(customer);
         CustomerDTO returnCDTO = customerMapper.customerToCustomerDTO(savedCustomer);
         returnCDTO.setUrl(getCustomerUrl(savedCustomer.getId()));
