@@ -17,4 +17,6 @@ public interface CustomerMapper {
 
     // dichiaro un metodo che verra' implementato da mapstruct e che serve per convertire un oggetto in un DTO (e quindi i dati in json)
     CustomerDTO customerToCustomerDTO(Customer customer);
+
+    Customer customerDTOToCustomer(CustomerDTO customerDTO);
 }

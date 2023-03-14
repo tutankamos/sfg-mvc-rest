@@ -7,9 +7,7 @@ import guru.springfamework.services.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping(CustomerController.BASE_URL)
@@ -39,4 +37,11 @@ public class CustomerController {
         );
     }
 
+    @PostMapping
+    public ResponseEntity<CustomerDTO> createNewCustomer(@RequestBody CustomerDTO customerDTO){ // con @RequestBody chiediamo a spring di guardare il body di quello che ci arriva per estrarre i dati
+        return new ResponseEntity<CustomerDTO>(
+                customerService.createNewCustomer(customerDTO),
+                HttpStatus.CREATED
+        );
+    }
 }
