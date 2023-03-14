@@ -74,6 +74,7 @@ public class CustomerServiceImpl implements CustomerService {
         }).orElseThrow(RuntimeException::new); // todo implement better exception handling
     }
 
+
 //    // provo a non usare .map
 //    @Override // vado in casino se tolgo il map perche' non so gestire bene l'opitonal
 //    public CustomerDTO patchCustomer(Long id, CustomerDTO customerDTO) {
@@ -89,6 +90,11 @@ public class CustomerServiceImpl implements CustomerService {
 //            return saveAndReturnDTO(customer);
 //        }.orElseThrow(RuntimeException::new); // todo implement better exception handling
 //    }
+
+    @Override
+    public void deleteCustomerById(Long id) {
+        customerRepository.deleteById(id); // tecnicamente dovrei metterci qualcosa che geestisce la possibilita' che non venga trovato l'id
+    }
 
     private String getCustomerUrl(Long id) {
         return CustomerController.BASE_URL + "/" + id;
