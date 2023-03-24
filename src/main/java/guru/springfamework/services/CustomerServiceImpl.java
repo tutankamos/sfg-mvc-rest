@@ -43,7 +43,7 @@ public class CustomerServiceImpl implements CustomerService {
                     customerDTO.setUrl(getCustomerUrl(id));
                     return customerDTO;
                 })
-                .orElseThrow(RuntimeException::new); // todo implement better exception handling
+                .orElseThrow(ResourceNotFoundException::new);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class CustomerServiceImpl implements CustomerService {
                 customer.setLastname(customerDTO.getLastname());
             }
             return saveAndReturnDTO(customer);
-        }).orElseThrow(RuntimeException::new); // todo implement better exception handling
+        }).orElseThrow(ResourceNotFoundException::new);
     }
 
 
@@ -88,7 +88,7 @@ public class CustomerServiceImpl implements CustomerService {
 //                customer.setLastname(customerDTO.getLastname());
 //            }
 //            return saveAndReturnDTO(customer);
-//        }.orElseThrow(RuntimeException::new); // todo implement better exception handling
+//        }.orElseThrow(RuntimeException::new);
 //    }
 
     @Override
